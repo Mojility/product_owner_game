@@ -11,7 +11,8 @@ import aurelia from '@easy-webpack/config-aurelia'
 import babel from '@easy-webpack/config-babel'
 import html from '@easy-webpack/config-html'
 import sass from '@easy-webpack/config-sass'
-import css from '@easy-webpack/config-css'
+// import css from '@easy-webpack/config-css'
+// import pug from '@easy-webpack/config-pug'
 import fontAndImages from '@easy-webpack/config-fonts-and-images'
 import globalBluebird from '@easy-webpack/config-global-bluebird'
 import globalJquery from '@easy-webpack/config-global-jquery'
@@ -22,15 +23,15 @@ import copyFiles from '@easy-webpack/config-copy-files'
 import uglify from '@easy-webpack/config-uglify'
 import generateCoverage from '@easy-webpack/config-test-coverage-istanbul'
 
-process.env.BABEL_ENV = 'webpack'
+process.env.BABEL_ENV = 'webpack';
 const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || (process.env.NODE_ENV = 'development')
 
 // basic configuration:
-const title = 'Starter Project'
-const baseUrl = '/'
-const rootDir = path.resolve()
-const srcDir = path.resolve('src')
-const outDir = path.resolve('dist')
+const title = 'Product Owner Game';
+const baseUrl = '/';
+const rootDir = path.resolve();
+const srcDir = path.resolve('src');
+const outDir = path.resolve('dist');
 
 const coreBundles = {
   bootstrap: [
@@ -67,7 +68,7 @@ const coreBundles = {
     'aurelia-templating-router',
     'aurelia-templating-resources'
   ]
-}
+};
 
 /**
  * Main Webpack Configuration
@@ -99,6 +100,7 @@ let config = generateConfig(
   aurelia({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
 
   babel({ options: { /* uses settings from .babelrc */ } }),
+  // pug(),
   html(),
   sass({ filename: 'styles.css' }), //, allChunks: true, sourceMap: true }),
   fontAndImages(),
@@ -117,6 +119,6 @@ let config = generateConfig(
 
   ENV === 'production' ?
     uglify({debug: false, mangle: { except: ['cb', '__webpack_require__'] }}) : {}
-)
+);
 
-module.exports = stripMetadata(config)
+module.exports = stripMetadata(config);

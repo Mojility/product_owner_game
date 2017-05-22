@@ -7,7 +7,8 @@ Bluebird.config({ warnings: false });
 export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .developmentLogging();
+    .developmentLogging()
+    .globalResources('value_converters/decimal_value_converter');
 
   await aurelia.start();
   aurelia.setRoot('app');

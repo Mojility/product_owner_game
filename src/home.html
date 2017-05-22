@@ -1,3 +1,108 @@
 <template>
-    <h1>Aurelia Starter Project</h1>
+    <h1>
+        <section class="title">Product Owner Game</section>
+        <section class="cash">
+            <label>Cash On Hand:</label>
+            ${game.cashOnHand | decimal: '$0,000.00'}
+        </section>
+    </h1>
+
+    <section class="score">
+        <div class="round">Round ${game.round}</div>
+        <div class="unspent">Unspent Capability ${game.unspentCapability | decimal}</div>
+        <div class="delivered">Value Delivered ${game.valueDelivered}</div>
+    </section>
+
+    <section class="queues">
+        <section class="titledList suggestions">
+            <h2>Suggestions</h2>
+            <ul>
+                <li repeat.for="story of game.in_consideration">
+                    <section class="story">
+                        <div class="description">${story.description}</div>
+                        <ul class="metadata">
+                            <li>
+                                <dt>Value</dt>
+                                <dd>${story.valueLabel}</dd>
+                            </li>
+                            <li>
+                                <dt>Size</dt>
+                                <dd>${story.sizeLabel}</dd>
+                            </li>
+                        </ul>
+                        <div class="actions">
+                            <button click.delegate="game.accept(story)">Accept</button>
+                            <button click.delegate="game.reject(story)">Reject</button>
+                        </div>
+                    </section>
+                </li>
+            </ul>
+        </section>
+        <section class="titledList backlog">
+            <h2>Backlog (${game.backlog.length})</h2>
+            <ul>
+                <li repeat.for="story of game.backlog">
+                    <section class="story">
+                        <div class="description">${story.description}</div>
+                        <ul class="metadata">
+                            <li>
+                                <dt>Value</dt>
+                                <dd>${story.valueLabel}</dd>
+                            </li>
+                            <li>
+                                <dt>Size</dt>
+                                <dd>${story.sizeLabel}</dd>
+                            </li>
+                            <li>
+                                <dt>Remaining</dt>
+                                <dd>${story.remainingWork | decimal}</dd>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+            </ul>
+        </section>
+        <section class="titledList team">
+            <h2>Team</h2>
+            <ul class="metadata">
+                <li>
+                    <dt>Distractibility</dt>
+                    <dd>${game.team.distractibility | decimal}</dd>
+                </li>
+                <li>
+                    <dt>Capability</dt>
+                    <dd>${game.team.totalPotential | decimal}</dd>
+                </li>
+                <li>
+                    <dt>Cycle Cost</dt>
+                    <dd>${game.team.cycleCost | decimal: '$0,000.00'}</dd>
+                </li>
+            </ul>
+            <ul>
+                <li repeat.for="dev of game.team.members">
+                    ${dev.name}
+                    (${dev.annualSalary | decimal: '$0,000.00' }, ${dev.distractible | decimal}, ${dev.adjustedCapability | decimal})
+                </li>
+            </ul>
+        </section>
+        <section class="titledList jobmarket">
+            <h2>Job Market</h2>
+            <ul>
+                <li repeat.for="candidate of game.jobMarket.candidates">
+                    <div class="developer">
+                        ${candidate.developer.name}
+                        ${candidate.developer.annualSalary | decimal: '$0,000.00'}
+                        <button click.delegate="game.hire(candidate)">Hire</button>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <section class="titledList log">
+        <h2>Events</h2>
+        <ol>
+            <li repeat.for="entry of game.log.entries">${entry}</li>
+        </ol>
+    </section>
 </template>

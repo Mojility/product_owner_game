@@ -1,5 +1,5 @@
 {
-  "name": "aurelia-starter-project",
+  "name": "product-owner-game",
   "version": "0.1.0",
   "contributors": [
     {
@@ -58,7 +58,10 @@
     "aurelia-templating-router": "^1.0.0",
     "babel-polyfill": "^6.20.0",
     "bluebird": "^3.4.6",
-    "isomorphic-fetch": "^2.2.1"
+    "faker": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.18.1",
+    "numeral": "^2.0.6"
   },
   "devDependencies": {
     "@easy-webpack/config-aurelia": "^2.2.2",
@@ -76,6 +79,7 @@
     "@easy-webpack/config-global-regenerator": "^1.2.2",
     "@easy-webpack/config-html": "^3.1.0",
     "@easy-webpack/config-json": "^3.1.0",
+    "@easy-webpack/config-pug": "^2.1.1",
     "@easy-webpack/config-sass": "^5.0.0",
     "@easy-webpack/config-test-coverage-istanbul": "^3.2.0",
     "@easy-webpack/config-uglify": "^2.2.3",
@@ -93,10 +97,9 @@
     "cross-env": "^3.1.3",
     "del-cli": "^0.2.0",
     "eslint": "^3.12.0",
-    "faker": "^4.1.0",
     "http-server": "^0.9.0",
     "istanbul": "^0.4.5",
-    "jasmine": "^2.5.3",
+    "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "nyc": "^10.2.0",
     "wait-on": "^2.0.1",

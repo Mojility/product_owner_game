@@ -1,1 +1,108 @@
 @import '../styles/variables';
+
+h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: $accent;
+  color: $brightWhite;
+  padding: 4pt 12pt;
+  section.cash {
+    font-size: 80%;
+    label {
+      color: $light-gray;
+    }
+  }
+}
+
+section.score {
+  display: flex;
+  justify-content: space-between;
+  background-color: lighten($accent, 10%);
+  color: $brightWhite;
+  div {
+    padding: 4pt 12pt;
+  }
+}
+
+section.queues {
+  display: flex;
+  flex: 1 1 0;
+
+  section.titledList {
+    flex: 1 1 0;
+    border-radius: $medium*2;
+  }
+}
+
+section.story {
+  display: flex;
+  flex-direction: column;
+}
+
+ul.metadata {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  li {
+    display: flex;
+    margin: 2pt;
+    font-size: 90%;
+    dt {
+      display: flex;
+      margin: 0;
+      padding: $tiny $small $tiny $medium;
+      background-color: lighten($secondary, 40%);
+      border-top-left-radius: 6pt;
+      border-bottom-left-radius: 6pt;
+    }
+    dd {
+      display: flex;
+      margin: 0;
+      padding: $tiny $medium $tiny $small;
+      background-color: lighten($secondary, 47%);
+      border-top-right-radius: $small;
+      border-bottom-right-radius: $small;
+    }
+  }
+}
+
+section.titledList {
+  h2 {
+    padding: 0;
+    margin: 0;
+    border-bottom: 1pt solid $dark;
+  }
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 $medium $medium $medium;
+
+  background-color: #f8f8f8;
+  overflow-y: auto;
+  margin: $small;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+section.titledList.log {
+  background-color: lighten($secondary, 40%);
+  margin: 0;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  h2 {
+    padding: 4pt;
+  }
+  ol {
+    justify-content: flex-end;
+    flex-direction: column-reverse;
+  }
+}
