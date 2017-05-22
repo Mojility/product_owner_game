@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%- htmlWebpackPlugin.options.metadata.title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
+    <script type="text/javascript">window.APP_ENV = '_APP_ENV_'</script>
+    <!-- imported CSS are concatenated and added automatically -->
+</head>
+<body aurelia-app="main">
+<% if (htmlWebpackPlugin.options.metadata.ENV === 'development') { %>
+<!-- Webpack Dev Server reload -->
+<script src="/webpack-dev-server.js"></script>
+<% } %>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "presets": [
+    "es2015"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    },
+    "webpack": {
+      "plugins": [
+        "transform-decorators-legacy",
+        "transform-class-properties"
+      ],
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "browsers": [
+                "last 2 versions",
+                "not ie <= 11"
+              ]
+            },
+            "loose": true,
+            "modules": false,
+            "whitelist": [
+              "transform-es2015-literals",
+              "transform-es2015-template-literals"
+            ],
+            "useBuiltIns": true
+          }
+        ]
+      ]
+    }
+  }
+}
