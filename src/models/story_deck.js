@@ -1,14 +1,27 @@
 import faker from 'faker';
-import Story from './story';
+import { Settings } from '../settings';
+import { Story, StoryType } from './story';
 
-const MaxValue = 3;
-const MaxSize = 3;
+let SIZES = Settings.story.sizes;
+let VALUES = Settings.story.values;
 
 export default class StoryDeck {
   next() {
-    let value = Math.ceil((Math.random() * MaxValue));
-    let size = Math.ceil((Math.random() * MaxSize));
     let description = faker.lorem.sentence();
-    return new Story(value, size, description);
+    return new Story(this.randomValue, this.randomSize, description, StoryType.feature);
+  }
+
+  get randomSize() {
+    return SIZES[Math.floor((Math.random() * VALUES.length))];
+  }
+
+  get randomValue() {
+    return VALUES[Math.floor((Math.random() * SIZES.length))];
+  }
+
+  createDefect(story) {
+    let defect = new Story(0, this.randomValue, story.description, StoryType.defect);
+    story.defects.push(defect);
+    return defect;
   }
 }

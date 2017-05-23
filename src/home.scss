@@ -33,22 +33,41 @@ section.queues {
     flex: 1 1 0;
     border-radius: $medium*2;
   }
-}
 
-section.story {
-  display: flex;
-  flex-direction: column;
+  section.story {
+    display: flex;
+    flex-direction: column;
+    background-color: $brightWhite;
+    margin: 4pt 0;
+    border-radius: $medium;
+    div.actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  section.story.defect {
+    div.description {
+      color: $accent;
+    }
+  }
+
+  section.story.feature {
+    div.description {
+      color: $secondary;
+    }
+  }
 }
 
 ul.metadata {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   li {
     display: flex;
     margin: 2pt;
-    font-size: 90%;
+    font-size: 80%;
     dt {
       display: flex;
       margin: 0;
@@ -100,8 +119,10 @@ section.titledList.log {
   justify-items: flex-start;
   h2 {
     padding: 4pt;
+    border-bottom: none;
   }
   ol {
+    display: flex;
     justify-content: flex-end;
     flex-direction: column-reverse;
   }

@@ -1,6 +1,14 @@
 <template>
     <h1>
         <section class="title">Product Owner Game</section>
+        <section class="cash" if.bind="game.income > 0">
+            <label>Customers:</label>
+            ${game.customers}
+        </section>
+        <section class="cash" if.bind="game.income > 0">
+            <label>Income:</label>
+            ${game.income | decimal: '$0,000.00'}
+        </section>
         <section class="cash">
             <label>Cash On Hand:</label>
             ${game.cashOnHand | decimal: '$0,000.00'}
@@ -18,15 +26,11 @@
             <h2>Suggestions</h2>
             <ul>
                 <li repeat.for="story of game.in_consideration">
-                    <section class="story">
+                    <section class="story ${story.type}">
                         <div class="description">${story.description}</div>
                         <ul class="metadata">
                             <li>
-                                <dt>Value</dt>
-                                <dd>${story.valueLabel}</dd>
-                            </li>
-                            <li>
-                                <dt>Size</dt>
+                                <dt>${story.valueLabel}</dt>
                                 <dd>${story.sizeLabel}</dd>
                             </li>
                         </ul>
@@ -42,7 +46,7 @@
             <h2>Backlog (${game.backlog.length})</h2>
             <ul>
                 <li repeat.for="story of game.backlog">
-                    <section class="story">
+                    <section class="story ${story.type}">
                         <div class="description">${story.description}</div>
                         <ul class="metadata">
                             <li>
@@ -63,7 +67,7 @@
             </ul>
         </section>
         <section class="titledList team">
-            <h2>Team</h2>
+            <h2>Team (${game.team.size})</h2>
             <ul class="metadata">
                 <li>
                     <dt>Distractibility</dt>

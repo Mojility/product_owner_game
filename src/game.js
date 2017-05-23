@@ -1,15 +1,16 @@
 import { inject } from 'aurelia-framework';
 import JobMarket from './models/job_market';
+import { StoryType } from './models/story';
 import StoryDeck from './models/story_deck';
 import Team from './models/team';
 import Log from './util/log';
 import { Settings } from './settings';
 
-let maxPerRoundNewStories = 5;
-
 @inject(Log, JobMarket, Team, StoryDeck)
 export default class Game {
   cashOnHand = Settings.initialBudget;
+  customers = 0;
+  _income = 0;
   round = 0;
   unspentCapability = 0;
   valueDelivered = 0;
@@ -40,8 +41,49 @@ export default class Game {
     this.jobMarket.tick();
     this.applyWork();
     this.team.tick();
+    this.storiesTick();
+    this.addDefects();
     this.cashOnHand -= this.team.cycleCost;
     this.calculateValueDelivered();
+    this.addCustomers();
+    this.removeCustomersDueToOpenBugs();
+    this.calculateIncome();
+  }
+
+  storiesTick() {
+    this.in_consideration.forEach(s => s.tickWhileWaiting());
+    this.backlog.forEach(s => s.tickWhileWaiting());
+    this.completed.forEach(s => s.tickInProduction());
+  }
+
+  addDefects() {
+    this.completed.forEach(s => {
+      if (Math.random() < s.chanceOfDefect) {
+        let defect = this.storyDeck.createDefect(s);
+        this.in_consideration.push(defect);
+      }
+    });
+  }
+
+  addCustomers() {
+    if (this.valueDelivered > Settings.valueRequiredForMVP) {
+      this.customers = Math.floor(this.customers + this.valueDelivered * Settings.newCustomersPerDeliveredValuePerCycle);
+    }
+  }
+
+  removeCustomersDueToOpenBugs() {
+    let openDefects = this.in_consideration.filter(s => s.type === StoryType.defect).length;
+    this.customers = Math.floor(this.customers - openDefects * Settings.customerLossPerCyclePerOpenBug);
+    if (this.customers < 0) this.customers = 0;
+  }
+
+  calculateIncome() {
+    this._income = this.customers * this.valueDelivered * Settings.incomeForValueDeliveredFactor;
+    this.cashOnHand += this._income;
+  }
+
+  get income() {
+    return this._income;
   }
 
   calculateValueDelivered() {
@@ -65,9 +107,16 @@ export default class Game {
   }
 
   addNewSuggestions() {
-    let quantity = Math.ceil(Math.random() * maxPerRoundNewStories);
-    for (let i = 0; i < quantity; i++)
-      this.in_consideration.push(this.storyDeck.next());
+    let factor = Settings.story.maxNewStoriesPerCycle;
+    if (factor >= 1) {
+      let quantity = Math.ceil(Math.random() * factor);
+      for (let i = 0; i < quantity; i++)
+        this.in_consideration.push(this.storyDeck.next());
+    } else {
+      if (Math.random() < factor) {
+        this.in_consideration.push(this.storyDeck.next());
+      }
+    }
   }
 
   acceptFirstStory() {
@@ -75,7 +124,11 @@ export default class Game {
   }
 
   rejectFirstStory() {
-    if (this.in_consideration.length > 0) this.reject(this.in_consideration[0]);
+    if (this.in_consideration.length > 0) {
+      let story = this.in_consideration[0];
+      if (story.type === StoryType.feature)
+        this.reject(story);
+    }
   }
 
   accept(story) {

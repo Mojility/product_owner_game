@@ -33,7 +33,7 @@ export default class Developer {
   }
 
   get capability() {
-    return this.level / Settings.employee.levelMax;
+    return this.level / Settings.employee.levelMax * Settings.employee.capabilityScale;
   }
 
   get adjustedCapability() {
