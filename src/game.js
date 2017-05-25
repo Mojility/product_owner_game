@@ -8,7 +8,7 @@ import { Settings } from './settings';
 
 @inject(Log, JobMarket, Team, StoryDeck)
 export default class Game {
-  cashOnHand = Settings.initialBudget;
+  cashOnHand = Settings.financial.initialBudget;
   customers = 0;
   _income = 0;
   round = 0;
@@ -66,19 +66,19 @@ export default class Game {
   }
 
   addCustomers() {
-    if (this.valueDelivered > Settings.valueRequiredForMVP) {
-      this.customers = Math.floor(this.customers + this.valueDelivered * Settings.newCustomersPerDeliveredValuePerCycle);
+    if (this.valueDelivered > Settings.business.valueRequiredForMVP) {
+      this.customers = Math.floor(this.customers + this.valueDelivered * Settings.business.newCustomersPerDeliveredValuePerCycle);
     }
   }
 
   removeCustomersDueToOpenBugs() {
     let openDefects = this.in_consideration.filter(s => s.type === StoryType.defect).length;
-    this.customers = Math.floor(this.customers - openDefects * Settings.customerLossPerCyclePerOpenBug);
+    this.customers = Math.floor(this.customers - openDefects * Settings.business.customerLossPerCyclePerOpenBug);
     if (this.customers < 0) this.customers = 0;
   }
 
   calculateIncome() {
-    this._income = this.customers * this.valueDelivered * Settings.incomeForValueDeliveredFactor;
+    this._income = this.customers * this.valueDelivered * Settings.financial.incomeForValueDeliveredFactor;
     this.cashOnHand += this._income;
   }
 

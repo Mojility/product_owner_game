@@ -19,7 +19,7 @@ export default class Team {
 
   get distractibility() {
     return this.members
-        .reduce((t, d) => t + d.distractible, 0) * Settings.teamDistractibilityFactor * this.size;
+        .reduce((t, d) => t + d.distractible, 0) * Settings.team.distractibilityFactor * this.size;
   }
 
   get totalActual() {

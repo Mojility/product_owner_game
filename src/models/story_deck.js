@@ -11,17 +11,17 @@ export default class StoryDeck {
     return new Story(this.randomValue, this.randomSize, description, StoryType.feature);
   }
 
+  createDefect(story) {
+    let defect = new Story(0, this.randomValue, story.description, StoryType.defect);
+    story.defects.push(defect);
+    return defect;
+  }
+
   get randomSize() {
     return SIZES[Math.floor((Math.random() * VALUES.length))];
   }
 
   get randomValue() {
     return VALUES[Math.floor((Math.random() * SIZES.length))];
-  }
-
-  createDefect(story) {
-    let defect = new Story(0, this.randomValue, story.description, StoryType.defect);
-    story.defects.push(defect);
-    return defect;
   }
 }
